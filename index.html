@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu TV Esquerdo - Receptor P2P</title>
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-sidebar: #1f2326; /* Cor idêntica aos menus escuros de TV */
+            --bg-inner: #141619;
+            --primary: #8257e5;
+            --text: #e1e1e6;
+            --text-secondary: #a8a8b3;
+            --success: #00e676;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start; /* ALTERADO: Força o app a colar no canto ESQUERDO */
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* Menu Lateral Esquerdo Compacto */
+        .tv-sidebar {
+            width: 300px; /* ALTERADO: Reduzido de 360px para 300px (mais estreito) */
+            height: 100vh;
+            background: var(--bg-sidebar);
+            box-shadow: 8px 0 30px rgba(0,0,0,0.8); /* Sombra invertida para o lado direito */
+            box-sizing: border-box;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #2e3438; /* Borda agora fica na direita do menu */
+        }
+
+        /* Área do Ícone C-Raio */
+        .logo-container {
+            text-align: left;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-container img {
+            width: 50px; /* Levemente menor para ajustar à nova largura */
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .header-text h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .header-text p {
+            margin: 2px 0 0 0;
+            color: var(--text-secondary);
+            font-size: 11px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin: 15px 0 8px 0;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+
+        /* Blocos de conteúdo internos */
+        .menu-item-box {
+            background: var(--bg-inner);
+            border: 1px solid #2e3438;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .digit-code {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 4px;
+        }
+
+        #qrcode {
+            display: inline-block;
+            padding: 8px;
+            background: white;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Área de Chat Otimizada */
+        .chat-box {
+            background: var(--bg-inner);
+            border: 1px solid #2e3438;
+            border-radius: 10px;
+            flex-grow: 1;
+            min-height: 180px;
+            max-height: 420px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .msg {
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            max-width: 85%;
+            word-break: break-all;
+            line-height: 1.4;
+        }
+        .msg.other { background: #2e3438; color: var(--text); align-self: flex-start; }
+
+        #status-bar {
+            background: rgba(0, 230, 11
