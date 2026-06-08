@@ -8,7 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
-            --bg-sidebar: #1f2326; 
+            --bg-tv: #0c0c0e;      /* CORRIGIDO: Cor escura para o resto da tela não ficar branca */
+            --bg-sidebar: #1f2326; /* Cor cinza escura da barra lateral */
             --bg-inner: #141619;
             --primary: #8257e5;
             --text: #e1e1e6;
@@ -18,7 +19,7 @@
 
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: transparent !important;
+            background-color: var(--bg-tv) !important; /* Força o fundo escuro na TV */
             margin: 0;
             padding: 0;
             display: flex;
@@ -48,7 +49,6 @@
             gap: 12px;
         }
 
-        /* Estilização do ícone SVG */
         .logo-svg {
             width: 50px;
             height: 50px;
@@ -67,14 +67,17 @@
             border-radius: 10px;
             margin-bottom: 15px;
             text-align: left;
-            padding-left: 20px;
+            padding-left: 15px;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .digit-code { 
             font-size: 24px; 
             font-weight: bold; 
             color: #fff; 
-            letter-spacing: 2px; 
+            letter-spacing: 1px; 
+            display: block;
         }
 
         #qrcode { display: inline-block; padding: 8px; background: white; border-radius: 10px; margin-top: 5px; }
@@ -108,7 +111,6 @@
             border: 1px solid var(--primary);
         }
 
-        /* Botão Interativo para forçar abertura do arquivo na TV */
         .btn-tv-action {
             display: block;
             background: var(--success);
@@ -137,8 +139,8 @@
             <path d="M340 80 L230 260 L300 260 L180 440 L210 280 L150 280 Z" fill="#ffff00" stroke="#cccc00" stroke-width="5" stroke-linejoin="round"/>
         </svg>
         <div class="header-text">
-            <h1>Conflash Tv</h1>
-            <p>Painel </p>
+            <h1>Receptor P2P</h1>
+            <p>Painel Esquerdo</p>
         </div>
     </div>
 
@@ -213,20 +215,17 @@
             if (data.meta === 'file-end') {
                 document.getElementById('status-bar').innerText = "✓ 100% Recebido!";
                 const blob = new Blob(recebendoArquivo.buffer, { type: recebendoArquivo.tipo });
+                const urlArquivo = URL.createObjectURL(blob);
                 
-                // Transforma o arquivo em uma URL válida de visualização
-                const url do arquivo = URL.createObjectURL(blob);
-                
-                // Cria botão com gatilho nativo para abrir o arquivo em tela cheia na TV
                 const btn = document.createElement('button');
                 btn.className = "btn-tv-action";
                 btn.innerText = "ABRIR / SALVAR ARQUIVO";
                 btn.onclick = function() {
                     const novaAba = window.open();
                     if(novaAba) {
-                        novaAba.document.write(`<iframe src="${url do arquivo}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+                        novaAba.document.write(`<iframe src="${urlArquivo}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
                     } else {
-                        window.location.href = url do arquivo; // Força na mesma tela caso o pop-up trave
+                        window.location.href = urlArquivo;
                     }
                 };
                 
