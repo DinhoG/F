@@ -8,7 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
-            --bg-sidebar: #1f2326; /* Cor idêntica aos menus escuros de TV */
+            --bg-tv: #0c0c0e;
+            --bg-sidebar: #1f2326;
             --bg-inner: #141619;
             --primary: #8257e5;
             --text: #e1e1e6;
@@ -18,30 +19,28 @@
 
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: transparent;
+            background-color: var(--bg-tv);
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: flex-start; /* ALTERADO: Força o app a colar no canto ESQUERDO */
+            justify-content: flex-start;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
         }
 
-        /* Menu Lateral Esquerdo Compacto */
         .tv-sidebar {
-            width: 300px; /* ALTERADO: Reduzido de 360px para 300px (mais estreito) */
+            width: 300px;
             height: 100vh;
             background: var(--bg-sidebar);
-            box-shadow: 8px 0 30px rgba(0,0,0,0.8); /* Sombra invertida para o lado direito */
+            box-shadow: 8px 0 30px rgba(0,0,0,0.8);
             box-sizing: border-box;
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #2e3438; /* Borda agora fica na direita do menu */
+            border-right: 1px solid #2e3438;
         }
 
-        /* Área do Ícone C-Raio */
         .logo-container {
             text-align: left;
             margin-bottom: 20px;
@@ -51,36 +50,16 @@
         }
 
         .logo-container img {
-            width: 50px; /* Levemente menor para ajustar à nova largura */
+            width: 50px;
             height: 50px;
             border-radius: 12px;
             object-fit: cover;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
-        .header-text h1 {
-            margin: 0;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 500;
-        }
+        .header-text h1 { margin: 0; color: #fff; font-size: 18px; font-weight: 500; }
+        .header-text p { margin: 2px 0 0 0; color: var(--text-secondary); font-size: 11px; }
+        .section-title { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); margin: 15px 0 8px 0; letter-spacing: 1px; }
 
-        .header-text p {
-            margin: 2px 0 0 0;
-            color: var(--text-secondary);
-            font-size: 11px;
-        }
-
-        .section-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin: 15px 0 8px 0;
-            letter-spacing: 1px;
-            text-align: left;
-        }
-
-        /* Blocos de conteúdo internos */
         .menu-item-box {
             background: var(--bg-inner);
             border: 1px solid #2e3438;
@@ -90,31 +69,17 @@
             text-align: center;
         }
 
-        .digit-code {
-            font-size: 28px;
-            font-weight: bold;
-            color: #fff;
-            letter-spacing: 4px;
-        }
-
-        #qrcode {
-            display: inline-block;
-            padding: 8px;
-            background: white;
-            border-radius: 10px;
-            margin-top: 5px;
-        }
-
+        .digit-code { font-size: 28px; font-weight: bold; color: #fff; letter-spacing: 4px; }
+        #qrcode { display: inline-block; padding: 8px; background: white; border-radius: 10px; margin-top: 5px; }
         .hidden { display: none !important; }
 
-        /* Área de Chat Otimizada */
         .chat-box {
             background: var(--bg-inner);
             border: 1px solid #2e3438;
             border-radius: 10px;
             flex-grow: 1;
-            min-height: 180px;
-            max-height: 420px;
+            min-height: 150px;
+            max-height: 380px;
             overflow-y: auto;
             margin-bottom: 15px;
             padding: 10px;
@@ -123,15 +88,142 @@
             gap: 8px;
         }
 
-        .msg {
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            max-width: 85%;
-            word-break: break-all;
-            line-height: 1.4;
-        }
-        .msg.other { background: #2e3438; color: var(--text); align-self: flex-start; }
+        .msg { padding: 8px 12px; border-radius: 10px; font-size: 12px; max-width: 85%; word-break: break-all; background: #2e3438; color: var(--text); align-self: flex-start; }
 
         #status-bar {
-            background: rgba(0, 230, 11
+            background: rgba(130, 87, 229, 0.1);
+            color: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid var(--primary);
+        }
+
+        /* Botão de Download chamativo para o controle da TV */
+        .btn-tv-download {
+            display: block;
+            background: var(--success);
+            color: #000;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 10px;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+            animation: piscar 1.5s infinite alternate;
+        }
+
+        @keyframes piscar {
+            from { transform: scale(1); }
+            to { transform: scale(1.03); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="tv-sidebar">
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo" onerror="this.src='https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=150&q=80'">
+        <div class="header-text">
+            <h1>Receptor P2P</h1>
+            <p>Painel Esquerdo</p>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #2e3438; margin: 5px 0 15px 0;">
+
+    <div id="setup-zone">
+        <div class="section-title">Código da TV</div>
+        <div class="menu-item-box">
+            <div class="digit-code" id="my-code">ARK...</div>
+        </div>
+        <div class="section-title">Acesso Rápido</div>
+        <div style="text-align: center; margin-top: 5px;"><div id="qrcode"></div></div>
+    </div>
+
+    <div id="share-zone" class="hidden" style="display: flex; flex-direction: column; flex-grow: 1;">
+        <div class="section-title" style="color: var(--success);">✓ Conectado</div>
+        <div class="section-title">Mensagens</div>
+        <div class="chat-box" id="chat-box"></div>
+        
+        <div id="status-bar">Aguardando dados...</div>
+        <div id="download-area"></div>
+    </div>
+</div>
+
+<script>
+    let peer = null;
+    let conn = null;
+    let recebendoArquivo = { nome: '', tipo: '', tamanho: 0, buffer: [], recebido: 0 };
+    
+    const sufixoAleatorio = Math.floor(1 + Math.random() * 9).toString();
+    const meuCodigoCurto = "ARK" + sufixoAleatorio;
+    document.getElementById('my-code').innerText = meuCodigoCurto;
+
+    peer = new Peer("dinho-sala-" + meuCodigoCurto, { host: '0.peerjs.com', port: 443, secure: true });
+
+    peer.on('open', () => {
+        const currentUrl = window.location.href.split('/').slice(0, -1).join('/');
+        new QRCode(document.getElementById("qrcode"), { text: `${currentUrl}/index.html?c=${meuCodigoCurto}`, width: 130, height: 130, correctLevel: QRCode.CorrectLevel.L });
+    });
+
+    peer.on('connection', (connection) => {
+        conn = connection;
+        conn.on('open', () => {
+            document.getElementById('setup-zone').classList.add('hidden');
+            document.getElementById('share-zone').classList.remove('hidden');
+        });
+
+        conn.on('data', (data) => {
+            // Se for início de transmissão de arquivo
+            if (data.meta === 'file-start') {
+                recebendoArquivo = { nome: data.name, tipo: data.type, tamanho: data.size, buffer: [], recebido: 0 };
+                document.getElementById('status-bar').innerText = `Baixando: 0%`;
+                document.getElementById('download-area').innerHTML = ""; // Limpa downloads antigos
+                return;
+            }
+
+            // Se for pedaço do arquivo
+            if (data.meta === 'file-chunk') {
+                recebendoArquivo.buffer.push(data.chunk);
+                recebendoArquivo.recebido += data.chunk.byteLength;
+                
+                let progresso = Math.floor((recebendoArquivo.recebido / recebendoArquivo.tamanho) * 100);
+                document.getElementById('status-bar').innerText = `Baixando: ${progresso}%`;
+                return;
+            }
+
+            // Se for fim do arquivo
+            if (data.meta === 'file-end') {
+                document.getElementById('status-bar').innerText = "✓ 100% Recebido!";
+                const blob = new Blob(recebendoArquivo.buffer, { type: recebendoArquivo.tipo });
+                
+                // Cria o botão físico para clicar com o controle remoto
+                const url = URL.createObjectURL(blob);
+                document.getElementById('download-area').innerHTML = `
+                    <a href="${url}" download="${recebendoArquivo.nome}" class="btn-tv-download">
+                        CLIQUE PARA SALVAR ARQUIVO
+                    </a>
+                `;
+                return;
+            }
+
+            // Se for mensagem de texto comum
+            if (data.type === 'text') {
+                const chatBox = document.getElementById('chat-box');
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('msg');
+                msgDiv.innerText = data.content;
+                chatBox.appendChild(msgDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+
+        conn.on('close', () => { location.reload(); });
+    </script>
+</body>
+</html>
