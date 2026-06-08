@@ -48,11 +48,12 @@
             gap: 12px;
         }
 
-        .logo-container img {
+        /* Estilização do ícone SVG */
+        .logo-svg {
             width: 50px;
             height: 50px;
             border-radius: 12px;
-            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .header-text h1 { margin: 0; color: #fff; font-size: 18px; font-weight: 500; }
@@ -107,29 +108,34 @@
             border: 1px solid var(--primary);
         }
 
-        .btn-tv-download {
+        /* Botão Interativo para forçar abertura do arquivo na TV */
+        .btn-tv-action {
             display: block;
             background: var(--success);
             color: #000;
-            text-decoration: none;
+            border: none;
+            width: 100%;
             padding: 14px;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 13px;
             text-align: center;
             margin-top: 10px;
+            cursor: pointer;
             box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
-            animation: piscar 1.5s infinite alternate;
         }
-
-        @keyframes piscar { from { transform: scale(1); } to { transform: scale(1.03); } }
     </style>
 </head>
 <body>
 
 <div class="tv-sidebar">
     <div class="logo-container">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIABAMAAAAvRZEfAAAABGdBTUEAALGPC/xhBQAAAFlQTFRFAAAAs7Ozk5OTREREREREnJycREREk5OTREREREREk5OTk5OTREREREREk5OTREREREREk5OTREREREREk5OTREREk5OTREREREREk5OTREREREREk5OTRERE////Gf63bAAAAEd0Uk5TAAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElK0Z9YvQAADstJREFUeNrt20mO3DgMBlCpBe8998D7n7An6An6B+7bH6G20hWSIgVSkYvIdNstZpYsyY8SJQpE6Wb62fUf3N/YFp9/XF/NffH5L/eIffb8F27b5883tsXn73zXb4vPrZ/ff2yLz+3j9uO7bZ8/39gWn7/fev98Y1v8fNv6/btt8fOtf/98Y1v8fNv6vX+/sf7D9N36H+Yfm77ff9n0ffv0m/nrtvW3zTe2xe/P+6/36+fPN7bF59b7/fPN++fPN7bF78/bnz9vfr59/nxjW/z+vPnD/Hz7/PnGtvi7+bZ9bF9//nxjW/zefNu2b79++v7z/W39/P43t/fXzTf9+vnGtvi7+b71p5++/Pz5xrb4u/m29aevv/z0+fa2fn7/u++f/2b69fPnG9vixw/7bft7vv/l803f39Z//2H/7eunr5++7W/rv/9w/vSvfvnpy6e/bYvfr8+/+9NPv/vly/rtXz99+fnm0/Nvfvn0p/33f/763ffPn/b39d//88fXT7/9/vXTt0/fbYvff/yw3z7t77fPx9X9vW+7779++um3j89b7+PrY1v82N+2/fHpx+fXt9f/YlvcH8fNfftx+9vPr3+fX9/Wb+N/Pj7ffm/ffnzf/vbtY/v86/u3jx+fb999+76///j++/e3H8efT3/+9fXb6/OPr99+//Hpx/H9++/H/ceP+/P75+fH/fPz/vnX99+fvz8/fr9//vX99+fvj+//Pz/uP3/9e7+/f78/v3/+ff/+/uP99bF9fbz+/vOPr9dfP96fP9+/H9+2r/ffP14/X1/vr9+/X+fV+fj4/b//fr+ej+/j+/PrfLx//Prp28fjP33bPx8f9w8/bvvD99v++/X9209fjz8fH8fj/ofj/vbjtr9/+3L+R9uP/6mPZ9tX+p/6eLZ9pf+pj6f7fKbf3T/dP90/3b+7/6ntZ/vdtZ/td9fevfv/uN19vnv3Xfuj62fX/tfX/9fXj9vdNf798fF7+/j4fvvHcX979+O4vb39sd/ffv+4v/3+/fvH/e0Px/3tX8f9X+fV3/5wXv0dY/vvv7Fdf3v3v9Z+F/99O+7++3bcffdtO+7ueYbt7nnG8O95xrD/+Hfe3D2YMLbPrb+P7v86bHf9j8Puuj/idvX669WfN7vv/mXcXfPnG++eb9w///H6X6/unm9s/17fXT8Y8/8fN/fPP97+G1v36P6veXfNnzfcfTzNfT7Tffwxb7jPP+b++e7vWf/XPNz/M7Z/zLvrX/Pumj9vePc8g+/W/OfPdz+6e38Y8887bPe/eYd+Ppp/f/rP/HnD/fNpu3v+MffPO+z++Yx+99M///v1vXl/9zX3/eH/u8MYfX/wZ/v68D8X6vYPfdf8Zf7f+77/f737D8YfDGP4g8Po/pC2u+8QhO0Xwuj++8N++4e0u/4h7K5/yLr/67Dd/pA19Idpe//vG+77w6ffv6W/u/f/vE8f6U/6u3v9X/P6g/70bftIf+9P/9ofZftdf/p4f5TuX//pW/+xX/vX/+67/Yf9h/3u3v9P9kfY/3WvP8K7f/2Xve8fXfeP6LvfP7L+X9p/mDff/vM++Xn6/9FfP3+enx///PPn+fnz43/+fH7+/Pnnz/Pn58fj7677f/8wrr/Xv/w7uP6f9dfv/07X/7v++vXf5er+Xv/uTv937vTv7p7++O+O93874P6w7/7Gfv/Xfrv/S5vv9z/tfv+zdf9T7vffre73f626/8fVb9fX39bf/scWv79vW/78v/zZFr//7fPPbft2///1840f37ZpW/3zH/+6bXzctmn1P/zx3Wb9Mxtf/+HffvpvfPrv21//uK2///z9u/fbtv15//7b98f2Z378Wb/+ufv90fT9u83vP/73H98ftvv///7+bXvcrq/9/fvXt+vXx67bvv38eP3j4/P9tW/+e9++Prfbt2+vj+/b9vV++/H6+vG+fXm/vb6+fdtu369//vFte/u2fX37/W/Xv3y8v98+/3Xbn9ev77fvt2/bt7df37fv/rYfXz/fb/fP9+/b559vX1/fnz9fv//7t6/Xf92ur//Z9tft+n+vrx+/vt+uz59vXz++b8fb+w/Wv//6Yfv+3WavXy2v/wz7+tW++8+uX7f9ff3Vff/p/XgZ6Z+2/eP6/uN+Z+M/NveP9f2V6p+m/eP7/pIifwL8x/3+E+Of1f1jyf/YvM8X+999vvi/9Plv2/bL//pD/vY//90W2///+unLt/2Xv/zlW//0Zf/bL//bL/u/fvnX755v/O+ffvrL/OXL//rly0//fFv8vPl8uS8+v8L0m4I=O">
+        <svg class="logo-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <rect width="512" height="512" rx="120" fill="#006b76"/>
+            <circle cx="256" cy="256" r="180" fill="#02525c"/>
+            <path d="M370 160 C330 110, 220 110, 180 160 C130 220, 130 300, 180 350 C220 400, 330 400, 370 350" fill="none" stroke="#ffffff" stroke-width="45" stroke-linecap="round"/>
+            <path d="M340 80 L230 260 L300 260 L180 440 L210 280 L150 280 Z" fill="#ffff00" stroke="#cccc00" stroke-width="5" stroke-linejoin="round"/>
+        </svg>
         <div class="header-text">
             <h1>Conflash Tv</h1>
             <p>Painel </p>
@@ -207,12 +213,24 @@
             if (data.meta === 'file-end') {
                 document.getElementById('status-bar').innerText = "✓ 100% Recebido!";
                 const blob = new Blob(recebendoArquivo.buffer, { type: recebendoArquivo.tipo });
-                const url = URL.createObjectURL(blob);
-                document.getElementById('download-area').innerHTML = `
-                    <a href="${url}" download="${recebendoArquivo.nome}" class="btn-tv-download">
-                        CLIQUE PARA SALVAR ARQUIVO
-                    </a>
-                `;
+                
+                // Transforma o arquivo em uma URL válida de visualização
+                const url do arquivo = URL.createObjectURL(blob);
+                
+                // Cria botão com gatilho nativo para abrir o arquivo em tela cheia na TV
+                const btn = document.createElement('button');
+                btn.className = "btn-tv-action";
+                btn.innerText = "ABRIR / SALVAR ARQUIVO";
+                btn.onclick = function() {
+                    const novaAba = window.open();
+                    if(novaAba) {
+                        novaAba.document.write(`<iframe src="${url do arquivo}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+                    } else {
+                        window.location.href = url do arquivo; // Força na mesma tela caso o pop-up trave
+                    }
+                };
+                
+                document.getElementById('download-area').appendChild(btn);
                 return;
             }
 
