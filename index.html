@@ -8,8 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
-            --bg-tv: #0c0c0e;      /* CORRIGIDO: Cor escura para o resto da tela não ficar branca */
-            --bg-sidebar: #1f2326; /* Cor cinza escura da barra lateral */
+            --bg-tv: #0c0c0e;      
+            --bg-sidebar: #1f2326; 
             --bg-inner: #141619;
             --primary: #8257e5;
             --text: #e1e1e6;
@@ -19,7 +19,7 @@
 
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-tv) !important; /* Força o fundo escuro na TV */
+            background-color: var(--bg-tv) !important; 
             margin: 0;
             padding: 0;
             display: flex;
@@ -49,13 +49,7 @@
             gap: 12px;
         }
 
-        .logo-svg {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
+        .logo-svg { width: 50px; height: 50px; border-radius: 12px; }
         .header-text h1 { margin: 0; color: #fff; font-size: 18px; font-weight: 500; }
         .header-text p { margin: 2px 0 0 0; color: var(--text-secondary); font-size: 11px; }
         .section-title { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); margin: 15px 0 8px 0; letter-spacing: 1px; }
@@ -72,14 +66,7 @@
             width: 100%;
         }
 
-        .digit-code { 
-            font-size: 24px; 
-            font-weight: bold; 
-            color: #fff; 
-            letter-spacing: 1px; 
-            display: block;
-        }
-
+        .digit-code { font-size: 24px; font-weight: bold; color: #fff; letter-spacing: 1px; display: block; }
         #qrcode { display: inline-block; padding: 8px; background: white; border-radius: 10px; margin-top: 5px; }
         .hidden { display: none !important; }
 
@@ -179,14 +166,8 @@
     peer.on('open', () => {
         const currentUrl = window.location.href.split('/').slice(0, -1).join('/');
         const linkCelular = `${currentUrl}/index.html?c=${meuCodigoCurto}`;
-        
         document.getElementById('qrcode').innerHTML = "";
-        new QRCode(document.getElementById("qrcode"), { 
-            text: linkCelular, 
-            width: 130, 
-            height: 130, 
-            correctLevel: QRCode.CorrectLevel.L 
-        });
+        new QRCode(document.getElementById("qrcode"), { text: linkCelular, width: 130, height: 130, correctLevel: QRCode.CorrectLevel.L });
     });
 
     peer.on('connection', (connection) => {
@@ -201,14 +182,20 @@
                 recebendoArquivo = { nome: data.name, tipo: data.type, tamanho: data.size, buffer: [], recebido: 0 };
                 document.getElementById('status-bar').innerText = `Baixando: 0%`;
                 document.getElementById('download-area').innerHTML = "";
+                // Confirma início e pede o primeiro chunk
+                conn.send({ meta: 'ack', nextOffset: 0 });
                 return;
             }
 
             if (data.meta === 'file-chunk') {
                 recebendoArquivo.buffer.push(data.chunk);
                 recebendoArquivo.recebido += data.chunk.byteLength;
+                
                 let progresso = Math.floor((recebendoArquivo.recebido / recebendoArquivo.tamanho) * 100);
                 document.getElementById('status-bar').innerText = `Baixando: ${progresso}%`;
+                
+                // Avisa o celular que processou e quer o próximo pedaço
+                conn.send({ meta: 'ack', nextOffset: recebendoArquivo.recebido });
                 return;
             }
 
@@ -228,7 +215,6 @@
                         window.location.href = urlArquivo;
                     }
                 };
-                
                 document.getElementById('download-area').appendChild(btn);
                 return;
             }
@@ -248,3 +234,4 @@
 </script>
 </body>
 </html>
+
